@@ -24,5 +24,9 @@ https://medium.com/@srigumm/building-realtime-streaming-applications-using-net-c
 https://docs.confluent.io/4.0.1/clients/confluent-kafka-dotnet/api/Confluent.Kafka.Producer.html#Confluent_Kafka_Producer_GetMetadata_System_Boolean_System_String_
 <br/>
 https://thecloudblog.net/post/building-reliable-kafka-producers-and-consumers-in-net/
+<br/>
+https://www.borakasmer.com/net-core-uzerinde-kafka/
+<br/>
+https://nielsberglund.com/2019/06/18/confluent-platform--kafka-for-a-.net-developer-on-windows/
 
 
