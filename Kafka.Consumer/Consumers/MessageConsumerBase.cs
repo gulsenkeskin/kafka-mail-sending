@@ -27,15 +27,17 @@ namespace Kafka.Consumer.Consumers
             using (var consumer = new ConsumerBuilder<Ignore, string>(conf).Build())
             {
                 consumer.Subscribe(_topic);
+                var cts = new CancellationTokenSource();
 
                 //var keepConsuming = true;
                 //consumer.OnError += (_, e) => keepConsuming = !e.IsFatal;
-                CancellationTokenSource cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) =>
-                {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cts.Cancel();
-                };
+                //CancellationTokenSource cts = new CancellationTokenSource();
+
+                //Console.CancelKeyPress += (_, e) =>
+                //{
+                //    e.Cancel = true; // prevent the process from terminating.
+                //    cts.Cancel();
+                //};
 
                 try
                 {
@@ -44,6 +46,7 @@ namespace Kafka.Consumer.Consumers
                         try
                         {
                             var consumedTextMessage = consumer.Consume(cts.Token);
+
                             Console.WriteLine($"Consumed message '{consumedTextMessage.Message.Value}' Topic: '{consumedTextMessage.Topic}'.");
 
                             var message = JsonConvert.DeserializeObject<IMessage>(consumedTextMessage.Message.Value);
@@ -59,7 +62,8 @@ namespace Kafka.Consumer.Consumers
                 }
                 catch (OperationCanceledException)
                 {
-              
+                    consumer.Close();
+
                 }
                 finally
                 {

@@ -10,6 +10,7 @@ namespace Kafka.Consumer
             Console.WriteLine("Consumer Started !");
 
             var emailMessageConsumer = new EmailMessageConsumer();
+
             emailMessageConsumer.StartConsuming();
 
             Console.ReadLine();

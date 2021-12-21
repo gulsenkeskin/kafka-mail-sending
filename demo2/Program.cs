@@ -17,11 +17,11 @@ namespace demo2
     {
         static void Main(string[] args)
         {
+
             CreateHostBuilder(args).Build().Run();
         }
         private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context, collection) =>
+            Host.CreateDefaultBuilder(args).ConfigureServices((context, collection) =>
             {
                 collection.AddHostedService<KafkaConsumerHostedService>();
                 collection.AddHostedService<KafkaProducerHostedService>();
@@ -42,11 +42,22 @@ namespace demo2
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("*****************************");
+
+            Console.Write("Content: ");
+            var content = Console.ReadLine();
+
+            Console.Write("Subject: ");
+            var subject = Console.ReadLine();
+
+            Console.Write("To: ");
+            var to = Console.ReadLine();
+            //produce email message
             var emailMessage = new EmailMessage
             {
-                Content = "demo 2 content",
-                Subject = "demo 2 subject",
-                To = "seleniumtestgulsen@gmail.com"
+                Content = content,
+                Subject = subject,
+                To = to
             };
 
             var value = JsonConvert.SerializeObject(emailMessage);
