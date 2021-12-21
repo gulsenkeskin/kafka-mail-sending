@@ -26,5 +26,7 @@ https://docs.confluent.io/4.0.1/clients/confluent-kafka-dotnet/api/Confluent.Kaf
 https://thecloudblog.net/post/building-reliable-kafka-producers-and-consumers-in-net/
 <br/>
 https://www.borakasmer.com/net-core-uzerinde-kafka/
+<br/>
+https://nielsberglund.com/2019/06/18/confluent-platform--kafka-for-a-.net-developer-on-windows/
 
 
