@@ -3,7 +3,6 @@
 
 ### The resources I use:
 <br/>
-<br/>
 https://www.youtube.com/watch?v=n_IQq3pze0s
 <br/>
 http://www.canertosuner.com/post/net-core-kafka-producer-consumer-kullanimi
