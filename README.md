@@ -30,6 +30,7 @@ https://nielsberglund.com/2019/06/18/confluent-platform--kafka-for-a-.net-develo
 <br/>
 https://www.red-gate.com/simple-talk/development/dotnet-development/using-apache-kafka-with-net/
 <br/>
+https://medium.com/hepsiburadatech/net-core-ve-kafka-141c91ab61a9
 
 
 
