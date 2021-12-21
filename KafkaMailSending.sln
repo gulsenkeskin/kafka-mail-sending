@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.Consumer", "Kafka.Consumer\Kafka.Consumer.csproj", "{7005A653-3840-4918-8832-C25BC76358D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka.Consumer", "Kafka.Consumer\Kafka.Consumer.csproj", "{7005A653-3840-4918-8832-C25BC76358D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.Producer", "Kafka.Producer\Kafka.Producer.csproj", "{64827892-3183-472E-8A1F-D99952B4A81F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka.Producer", "Kafka.Producer\Kafka.Producer.csproj", "{64827892-3183-472E-8A1F-D99952B4A81F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaDemo", "KafkaDemo\KafkaDemo.csproj", "{2E2A85AC-775F-4422-9CC8-8543921AC958}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaDemo", "KafkaDemo\KafkaDemo.csproj", "{2E2A85AC-775F-4422-9CC8-8543921AC958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.Message", "Kafka.Message\Kafka.Message.csproj", "{B3569DFE-60DB-422F-885E-6C212CA6A115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka.Message", "Kafka.Message\Kafka.Message.csproj", "{B3569DFE-60DB-422F-885E-6C212CA6A115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo2", "demo2\demo2.csproj", "{0021A811-7BB2-46E3-88A6-7D693DB2B48C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demo2", "demo2\demo2.csproj", "{0021A811-7BB2-46E3-88A6-7D693DB2B48C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaMail", "KafkaMail\KafkaMail.csproj", "{13B81C8F-DAEB-440C-BEBE-69327E911FE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer", "Consumer\Consumer.csproj", "{CD4874BF-822D-4632-8BB7-2E8ADF3D01B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer", "Producer\Producer.csproj", "{08092423-377F-4F18-98C9-5DC596D40361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{0021A811-7BB2-46E3-88A6-7D693DB2B48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0021A811-7BB2-46E3-88A6-7D693DB2B48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0021A811-7BB2-46E3-88A6-7D693DB2B48C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B81C8F-DAEB-440C-BEBE-69327E911FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B81C8F-DAEB-440C-BEBE-69327E911FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B81C8F-DAEB-440C-BEBE-69327E911FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B81C8F-DAEB-440C-BEBE-69327E911FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4874BF-822D-4632-8BB7-2E8ADF3D01B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4874BF-822D-4632-8BB7-2E8ADF3D01B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4874BF-822D-4632-8BB7-2E8ADF3D01B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4874BF-822D-4632-8BB7-2E8ADF3D01B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08092423-377F-4F18-98C9-5DC596D40361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08092423-377F-4F18-98C9-5DC596D40361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08092423-377F-4F18-98C9-5DC596D40361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08092423-377F-4F18-98C9-5DC596D40361}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
