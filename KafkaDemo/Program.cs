@@ -26,6 +26,7 @@ namespace KafkaDemo
         });
     }
 }
+
 public class KafkaConsumerHostedService : IHostedService
 {
     private readonly ILogger<KafkaConsumerHostedService> _logger;
@@ -88,7 +89,6 @@ public class KafkaProducerHostedService : IHostedService
         _producer?.Dispose();
         return Task.CompletedTask;
     }
-}
 }
 
 
