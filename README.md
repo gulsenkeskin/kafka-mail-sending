@@ -27,5 +27,7 @@ https://thecloudblog.net/post/building-reliable-kafka-producers-and-consumers-in
 https://www.borakasmer.com/net-core-uzerinde-kafka/
 <br/>
 https://nielsberglund.com/2019/06/18/confluent-platform--kafka-for-a-.net-developer-on-windows/
+<br/>
+https://www.red-gate.com/simple-talk/development/dotnet-development/using-apache-kafka-with-net/
 
 
