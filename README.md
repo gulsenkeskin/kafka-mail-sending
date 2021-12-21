@@ -4,7 +4,9 @@
 ### The resources I use:
 <br/>
 <br/>
-1.) https://www.youtube.com/watch?v=n_IQq3pze0s 
+https://www.youtube.com/watch?v=n_IQq3pze0s
+<br/>
+http://www.canertosuner.com/post/net-core-kafka-producer-consumer-kullanimi
 
 
 
