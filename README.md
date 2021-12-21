@@ -2,6 +2,8 @@
 sending an e-mail with kafka
 
 ### The resources I use:
+https://github.com/confluentinc/confluent-kafka-dotnet
+<br/>
 https://www.youtube.com/watch?v=n_IQq3pze0s
 <br/>
 http://www.canertosuner.com/post/net-core-kafka-producer-consumer-kullanimi
