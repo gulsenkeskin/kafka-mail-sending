@@ -11,7 +11,8 @@
 
 <br/>
 <br/>
-### Other resources:
+
+Other resources:
 <br/>
 <br/>
 https://www.thecodebuzz.com/kafka-asp-net-core-event-driven-microservices/
