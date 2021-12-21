@@ -2,8 +2,6 @@
 using Kafka.Message;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Kafka.Producer
 {
@@ -13,11 +11,14 @@ namespace Kafka.Producer
         {
             var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
 
-            using (var producer = new Producer<Null, string>(config))
+            using (var producer = new ProducerBuilder<Null, string>(config).Build())
             {
                 var textMessage = JsonConvert.SerializeObject(message);
 
-                producer.BeginProduce(topic, new Message<Null, string> { Value = textMessage }, OnDelivery);
+                producer.Produce(topic, new Message<Null, string> { Value = textMessage }, OnDelivery);
+
+                producer.Flush(TimeSpan.FromSeconds(10));
+
             }
         }
         private void OnDelivery(DeliveryReport<Null, string> r)

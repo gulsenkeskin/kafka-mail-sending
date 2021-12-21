@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Kafka.Consumer.Consumers
 {
@@ -20,35 +21,48 @@ namespace Kafka.Consumer.Consumers
             {
                 GroupId = "emailmessage-consumer-group",
                 BootstrapServers = "localhost:9092",
-                AutoOffsetReset = AutoOffsetResetType.Earliest
+                AutoOffsetReset = AutoOffsetReset.Earliest
             };
 
-            using (var consumer = new Consumer<Ignore, string>(conf))
+            using (var consumer = new ConsumerBuilder<Ignore, string>(conf).Build())
             {
                 consumer.Subscribe(_topic);
 
-                var keepConsuming = true;
-                consumer.OnError += (_, e) => keepConsuming = !e.IsFatal;
-
-                while (keepConsuming)
+                //var keepConsuming = true;
+                //consumer.OnError += (_, e) => keepConsuming = !e.IsFatal;
+                CancellationTokenSource cts = new CancellationTokenSource();
+                Console.CancelKeyPress += (_, e) =>
                 {
-                    try
-                    {
-                        var consumedTextMessage = consumer.Consume();
-                        Console.WriteLine($"Consumed message '{consumedTextMessage.Value}' Topic: '{consumedTextMessage.Topic}'.");
+                    e.Cancel = true; // prevent the process from terminating.
+                    cts.Cancel();
+                };
 
-                        var message = JsonConvert.DeserializeObject<IMessage>(consumedTextMessage.Value);
-
-                        OnMessageDelivered(message);
-                    }
-                    catch (ConsumeException e)
+                try
+                {
+                    while (true)
                     {
-                        OnErrorOccured(e.Error);
+                        try
+                        {
+                            var consumedTextMessage = consumer.Consume(cts.Token);
+                            Console.WriteLine($"Consumed message '{consumedTextMessage.Message.Value}' Topic: '{consumedTextMessage.Topic}'.");
+
+                            var message = JsonConvert.DeserializeObject<IMessage>(consumedTextMessage.Message.Value);
+
+                            OnMessageDelivered(message);
+                        }
+                        catch (ConsumeException e)
+                        {
+                            OnErrorOccured(e.Error);
+                        }
                     }
+
                 }
+                catch (OperationCanceledException)
+                {
 
-                // Ensure the consumer leaves the group cleanly and final offsets are committed.
-                consumer.Close();
+                    consumer.Close();
+
+                }
             }
         }
         public abstract void OnMessageDelivered(IMessage message);

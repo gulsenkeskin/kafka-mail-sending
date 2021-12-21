@@ -1,8 +1,6 @@
 ﻿using Confluent.Kafka;
 using Kafka.Message;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Kafka.Consumer.Consumers
 {
