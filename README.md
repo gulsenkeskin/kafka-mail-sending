@@ -29,5 +29,7 @@ https://www.borakasmer.com/net-core-uzerinde-kafka/
 https://nielsberglund.com/2019/06/18/confluent-platform--kafka-for-a-.net-developer-on-windows/
 <br/>
 https://www.red-gate.com/simple-talk/development/dotnet-development/using-apache-kafka-with-net/
+<br/>
+https://docs.confluent.io/4.0.1/clients/confluent-kafka-dotnet/api/Confluent.Kafka.Producer.html#Confluent_Kafka_Producer_GetMetadata_System_Boolean_System_String_
 
 
