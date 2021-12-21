@@ -14,7 +14,6 @@ http://www.canertosuner.com/post/net-core-kafka-producer-consumer-kullanimi
 
 Other resources:
 <br/>
-<br/>
 https://www.thecodebuzz.com/kafka-asp-net-core-event-driven-microservices/
 <br/>
 https://medium.com/@srigumm/building-realtime-streaming-applications-using-net-core-and-kafka-ad45ed081b31
