@@ -59,9 +59,11 @@ namespace Kafka.Consumer.Consumers
                 }
                 catch (OperationCanceledException)
                 {
-
+              
+                }
+                finally
+                {
                     consumer.Close();
-
                 }
             }
         }
