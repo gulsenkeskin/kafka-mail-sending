@@ -6,7 +6,6 @@ namespace Kafka.Message
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }

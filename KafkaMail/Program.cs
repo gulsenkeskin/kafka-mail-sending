@@ -40,18 +40,17 @@ namespace KafkaMail
             var config = new ProducerConfig()
             {
                 BootstrapServers = "localhost:9092",
-                LingerMs = 5000
+                //BatchSize = 5,
+                //LingerMs = 10000,
             };
             _producer = new ProducerBuilder<Null, string>(config).Build();
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-
-
-            List<EmailMessage> messageList= new List<EmailMessage>();
+            List<EmailMessage> messageList = new List<EmailMessage>();
             for (int i = 0; i < 100; i++)
             {
-               var m= new EmailMessage
+                var m = new EmailMessage
                 {
                     Content = $"content {i} message",
                     Subject = $"subject {i} message",
@@ -59,11 +58,9 @@ namespace KafkaMail
                 };
                 messageList.Add(m);
             }
-          
-
 
             foreach (var message in messageList)
-            {       
+            {
                 var value = JsonConvert.SerializeObject(message);
                 _logger.LogInformation(value);
                 await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
@@ -73,35 +70,6 @@ namespace KafkaMail
 
                 _producer.Flush(timeout: TimeSpan.FromSeconds(10));
             }
-
-
-            //Console.Write("Content: ");
-            //var content = Console.ReadLine();
-
-            //Console.Write("Subject: ");
-            //var subject = Console.ReadLine();
-
-            //Console.Write("To: ");
-            //var to = Console.ReadLine();
-            ////produce email message
-            //var emailMessage = new EmailMessage
-            //{
-            //    Content = content,
-            //    Subject = subject,
-            //    To = to
-            //};
-
-            //var value = JsonConvert.SerializeObject(emailMessage);
-            //_logger.LogInformation(value);
-            //await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
-            //{
-            //    Value = value
-            //}, cancellationToken);
-
-            //_producer.Flush(timeout: TimeSpan.FromSeconds(10));
-
-
-
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -135,8 +103,6 @@ namespace KafkaMail
                 var b = ser.Deserialize<EmailMessage>(value);
 
                 sendMail(b);
-
-
             };
             return Task.CompletedTask;
         }
@@ -151,7 +117,7 @@ namespace KafkaMail
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("seleniumtestgulsen@gmail.com", "testselenium");
+            client.Credentials = new System.Net.NetworkCredential("youremail", "yourpassword");
             try
             {
                 client.Send(m);
@@ -165,46 +131,11 @@ namespace KafkaMail
             }
 
         }
-        //public void sendMailList(List<EmailMessage> messageList)
-        //{
-        //    foreach (var message in messageList)
-        //    {
-        //        MailMessage m = new MailMessage("seleniumtestgulsen@gmail.com", message.To);
-        //        m.Subject = message.Subject;
-        //        m.Body = message.Content;
-
-        //        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-        //        client.EnableSsl = true;
-        //        client.Credentials = new System.Net.NetworkCredential("seleniumtestgulsen@gmail.com", "testselenium");
-        //        try
-        //        {
-        //            client.Send(m);
-        //            Console.WriteLine("Mail gönderildi");
-
-        //        }
-        //        catch (SmtpException ex)
-        //        {
-        //            Console.WriteLine("Exception caught in SendErrorLog: {0}",
-        //                ex.ToString());
-        //        }
-        //    }
-        //}
-
-
-
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _cluster?.Dispose();
             return Task.CompletedTask;
         }
-
-
-
     }
-
-
-
-
-
 
 }
