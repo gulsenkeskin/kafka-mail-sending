@@ -5,8 +5,11 @@ using Kafka.Public.Loggers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Nancy.Json;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,42 +39,66 @@ namespace KafkaMail
             _logger = logger;
             var config = new ProducerConfig()
             {
-                BootstrapServers = "localhost:9092"
+                BootstrapServers = "localhost:9092",
+                LingerMs = 5000
             };
             _producer = new ProducerBuilder<Null, string>(config).Build();
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine("*****************************");
 
-            Console.Write("Content: ");
-            var content = Console.ReadLine();
 
-            Console.Write("Subject: ");
-            var subject = Console.ReadLine();
-
-            Console.Write("To: ");
-            var to = Console.ReadLine();
-            //produce email message
-            var emailMessage = new EmailMessage
+            List<EmailMessage> messageList= new List<EmailMessage>();
+            for (int i = 0; i < 100; i++)
             {
-                Content = content,
-                Subject = subject,
-                To = to
-            };
-
-            var value = JsonConvert.SerializeObject(emailMessage);
-            _logger.LogInformation(value);
-            await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
-            {
-                Value = value
-            }, cancellationToken);
+               var m= new EmailMessage
+                {
+                    Content = $"content {i} message",
+                    Subject = $"subject {i} message",
+                    To = "gulsenkeskin2@gmail.com"
+                };
+                messageList.Add(m);
+            }
+          
 
 
+            foreach (var message in messageList)
+            {       
+                var value = JsonConvert.SerializeObject(message);
+                _logger.LogInformation(value);
+                await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
+                {
+                    Value = value
+                }, cancellationToken);
+
+                _producer.Flush(timeout: TimeSpan.FromSeconds(10));
+            }
 
 
+            //Console.Write("Content: ");
+            //var content = Console.ReadLine();
 
-            _producer.Flush(timeout: TimeSpan.FromSeconds(10));
+            //Console.Write("Subject: ");
+            //var subject = Console.ReadLine();
+
+            //Console.Write("To: ");
+            //var to = Console.ReadLine();
+            ////produce email message
+            //var emailMessage = new EmailMessage
+            //{
+            //    Content = content,
+            //    Subject = subject,
+            //    To = to
+            //};
+
+            //var value = JsonConvert.SerializeObject(emailMessage);
+            //_logger.LogInformation(value);
+            //await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
+            //{
+            //    Value = value
+            //}, cancellationToken);
+
+            //_producer.Flush(timeout: TimeSpan.FromSeconds(10));
 
 
 
@@ -100,15 +127,84 @@ namespace KafkaMail
             _cluster.MessageReceived += record =>
             {
                 _logger.LogInformation($"Received: {Encoding.UTF8.GetString(record.Value as byte[])}");
+
+                string value = Encoding.UTF8.GetString(record.Value as byte[]);
+
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                var r = ser.Deserialize<List<EmailMessage>>(value);
+                var b = ser.Deserialize<EmailMessage>(value);
+
+                sendMail(b);
+
+
             };
             return Task.CompletedTask;
         }
+
+
+        public void sendMail(EmailMessage message)
+        {
+
+            MailMessage m = new MailMessage("seleniumtestgulsen@gmail.com", message.To);
+            m.Subject = message.Subject;
+            m.Body = message.Content;
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("seleniumtestgulsen@gmail.com", "testselenium");
+            try
+            {
+                client.Send(m);
+                Console.WriteLine("Mail gönderildi");
+
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine("Exception caught in SendErrorLog: {0}",
+                    ex.ToString());
+            }
+
+        }
+        //public void sendMailList(List<EmailMessage> messageList)
+        //{
+        //    foreach (var message in messageList)
+        //    {
+        //        MailMessage m = new MailMessage("seleniumtestgulsen@gmail.com", message.To);
+        //        m.Subject = message.Subject;
+        //        m.Body = message.Content;
+
+        //        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+        //        client.EnableSsl = true;
+        //        client.Credentials = new System.Net.NetworkCredential("seleniumtestgulsen@gmail.com", "testselenium");
+        //        try
+        //        {
+        //            client.Send(m);
+        //            Console.WriteLine("Mail gönderildi");
+
+        //        }
+        //        catch (SmtpException ex)
+        //        {
+        //            Console.WriteLine("Exception caught in SendErrorLog: {0}",
+        //                ex.ToString());
+        //        }
+        //    }
+        //}
+
+
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _cluster?.Dispose();
             return Task.CompletedTask;
         }
+
+
+
     }
+
+
+
+
+
 
 }

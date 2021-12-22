@@ -46,8 +46,8 @@ namespace Kafka.Consumer.Consumers
                     {
                         try
                         {
-                            //var consumedTextMessage = consumer.Consume(cts.Token);
-                            var consumedTextMessage = consumer.Consume();
+                            var consumedTextMessage = consumer.Consume(cts.Token);
+                            //var consumedTextMessage = consumer.Consume();
 
                             Console.WriteLine($"Consumed message '{consumedTextMessage.Message.Value}' Topic: '{consumedTextMessage.Topic}'.");
 
