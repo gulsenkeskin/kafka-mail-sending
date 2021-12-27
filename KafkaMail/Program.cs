@@ -40,7 +40,6 @@ namespace KafkaMail
             var config = new ProducerConfig()
             {
                 BootstrapServers = "localhost:9092",
-                //BatchSize = 5,
                 //LingerMs = 10000,
             };
             _producer = new ProducerBuilder<Null, string>(config).Build();
@@ -48,7 +47,7 @@ namespace KafkaMail
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             List<EmailMessage> messageList = new List<EmailMessage>();
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 11; i++)
             {
                 var m = new EmailMessage
                 {
@@ -69,6 +68,8 @@ namespace KafkaMail
                 }, cancellationToken);
 
                 _producer.Flush(timeout: TimeSpan.FromSeconds(10));
+                _producer.Poll(TimeSpan.FromMinutes(1));
+
             }
         }
 
@@ -102,13 +103,20 @@ namespace KafkaMail
                 var r = ser.Deserialize<List<EmailMessage>>(value);
                 var b = ser.Deserialize<EmailMessage>(value);
 
-                sendMail(b);
+                Mail.SendMail(b);
             };
             return Task.CompletedTask;
         }
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _cluster?.Dispose();
+            return Task.CompletedTask;
+        }
+    }
 
-
-        public void sendMail(EmailMessage message)
+    public static class Mail
+    {
+        public static void SendMail(EmailMessage message)
         {
 
             MailMessage m = new MailMessage("seleniumtestgulsen@gmail.com", message.To);
@@ -117,7 +125,7 @@ namespace KafkaMail
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("youremail", "yourpassword");
+            client.Credentials = new System.Net.NetworkCredential("seleniumtestgulsen@gmail.com", "testseleniumgulsen123456789");
             try
             {
                 client.Send(m);
@@ -131,11 +139,5 @@ namespace KafkaMail
             }
 
         }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _cluster?.Dispose();
-            return Task.CompletedTask;
-        }
     }
-
 }
