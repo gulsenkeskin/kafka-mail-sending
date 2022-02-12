@@ -1,5 +1,5 @@
 # KafkaMailSending
-sending an e-mail with kafka
+sending an e-mail with kafka.
 
 ### The resources I use:
 https://github.com/confluentinc/confluent-kafka-dotnet
